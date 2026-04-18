@@ -6,78 +6,11 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Badge from 'react-bootstrap/Badge'
-import rdr from '../assets/Games/rdr.jpeg'
-import forza from '../assets/Games/forza.jpeg'
-import cyber from '../assets/Games/cyber.jpeg'
-import pubg from '../assets/Games/pubg.jpg'
-import gta from '../assets/Games/Gta.jpg'
-import minecraft from '../assets/Games/craft.jpg'
+import { games as allGames } from './gameData'
 
-const libraryGames = [
-  {
-    id: 1,
-    title: 'Forza Horizon 5',
-    description: 'Experience the thrill of racing in the most immersive open-world driving game.',
-    rating: 4.5,
-    image: forza,
-    playtime: '45 hours',
-    lastPlayed: '2 days ago',
-    status: 'Installed'
-  },
-  {
-    id: 2,
-    title: 'Red Dead Redemption',
-    description: 'Embark on a journey through the American frontier in this epic western adventure.',
-    rating: 4.8,
-    image: rdr,
-    playtime: '120 hours',
-    lastPlayed: '1 week ago',
-    status: 'Installed'
-  },
-  {
-    id: 3,
-    title: 'CYBERPUNK 2077',
-    description: 'Dive into the neon-lit streets of Night City.',
-    rating: 4.7,
-    image: cyber,
-    playtime: '85 hours',
-    lastPlayed: '3 days ago',
-    status: 'Update Available'
-  },
-  {
-    id: 4,
-    title: 'PUBG',
-    description: 'Battle royale gaming at its finest.',
-    rating: 4.3,
-    image: pubg,
-    playtime: '200 hours',
-    lastPlayed: 'Yesterday',
-    status: 'Installed'
-  },
-  {
-    id: 5,
-    title: 'GTA V',
-    description: 'Experience the sprawling city of Los Santos.',
-    rating: 4.5,
-    image: gta,
-    playtime: '150 hours',
-    lastPlayed: '5 days ago',
-    status: 'Installed'
-  },
-  {
-    id: 6,
-    title: 'Minecraft',
-    description: 'Build, explore, and survive in your own 3D world.',
-    rating: 4.8,
-    image: minecraft,
-    playtime: '300+ hours',
-    lastPlayed: 'Today',
-    status: 'Installed'
-  }
-]
 
 function Gamelibrary() {
-  const [games, setGames] = useState(libraryGames)
+  const [games, setGames] = useState(allGames)
   const navigate = useNavigate()
   const location = useLocation()
 

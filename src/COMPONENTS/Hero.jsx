@@ -12,9 +12,9 @@ function Hero() {
             <p className="lead mb-4">
               Discover and explore an amazing collection of games. From action-packed adventures to mind-bending puzzles, find your next favorite game here.
             </p>
-            <button className="btn btn-light btn-lg me-3">
+            <a href="#featured-games" className="btn btn-light btn-lg me-3">
               Explore Games
-            </button>
+            </a>
             <button className="btn btn-outline-light btn-lg">
               Learn More
             </button>
