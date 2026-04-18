@@ -10,7 +10,7 @@ import rdr from '../assets/Games/rdr.jpeg'
 import forza from '../assets/Games/forza.jpeg'
 import cyber from '../assets/Games/cyber.jpeg'
 import pubg from '../assets/Games/pubg.jpg'
-import gta from '../assets/Games/gta.jpg'
+import gta from '../assets/Games/Gta.jpg'
 import minecraft from '../assets/Games/craft.jpg'
 
 const libraryGames = [
