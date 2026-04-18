@@ -1,0 +1,111 @@
+import rdr from '../assets/Games/rdr.jpeg'
+import forza from '../assets/Games/forza.jpeg'
+import cyber from '../assets/Games/cyber.jpeg'
+import pubg from '../assets/Games/pubg.jpg'
+import Gta from '../assets/Games/Gta.jpg'
+import minecraft from '../assets/Games/craft.jpg'
+import fortnite from '../assets/Games/fortnite.jpeg'
+import valorant from '../assets/Games/valorant.jpeg'
+import ets2 from '../assets/Games/ets2.jpeg'
+
+export const games = [
+  {
+    id: 1,
+    title: 'Forza Horizon 5',
+    description: 'Experience the thrill of racing in the most immersive open-world driving game.',
+    rating: 4.5,
+    image: forza,
+    playtime: '12 hours',
+    lastPlayed: 'Today',
+    status: 'Installed',
+    action: 'Experience the Thrill',
+  },
+  {
+    id: 2,
+    title: 'Red Dead Redemption',
+    description: 'Embark on a journey through the American frontier in this epic western adventure.',
+    rating: 4.8,
+    image: rdr,
+    playtime: '34 hours',
+    lastPlayed: 'Yesterday',
+    status: 'Installed',
+    action: 'Experience the West',
+  },
+  {
+    id: 3,
+    title: 'CYBERPUNK 2077',
+    description: 'Dive into the neon-lit streets of Night City, where you can customize your character and explore a sprawling open world.',
+    rating: 4.7,
+    image: cyber,
+    playtime: '8 hours',
+    lastPlayed: '2 days ago',
+    status: 'Update Available',
+    action: 'Explore Night City',
+  },
+  {
+    id: 4,
+    title: 'PUBG',
+    description: 'Drop onto the island, scavenge for elite gear, and outsmart intense enemies in a battle royale showdown.',
+    rating: 4.3,
+    image: pubg,
+    playtime: '15 hours',
+    lastPlayed: 'Last week',
+    status: 'Installed',
+    action: 'Start Battleground',
+  },
+  {
+    id: 5,
+    title: 'Gta V',
+    description: 'Experience the sprawling city of Los Santos, with high-stakes heists, intense shootouts, and endless open-world action.',
+    rating: 4.5,
+    image: Gta,
+    playtime: '56 hours',
+    lastPlayed: '3 days ago',
+    status: 'Installed',
+    action: 'Roleplay Game',
+  },
+  {
+    id: 6,
+    title: 'Minecraft',
+    description: 'Build, explore, and survive in your own 3D world.',
+    rating: 4.8,
+    image: minecraft,
+    playtime: '120 hours',
+    lastPlayed: 'Today',
+    status: 'Installed',
+    action: 'Enjoy World',
+  },
+  {
+    id: 7,
+    title: 'Fortnite',
+    description: 'Drop into the island, gather loot, and outlast all opponents to secure that epic Victory Royale.',
+    rating: 4.6,
+    image: fortnite,
+    playtime: '45 hours',
+    lastPlayed: 'Yesterday',
+    status: 'Installed',
+    action: 'Enjoy World',
+  },
+  {
+    id: 8,
+    title: 'Valorant',
+    description: 'Engage in tactical team-based combat with unique agents and abilities.',
+    rating: 4.4,
+    image: valorant,
+    playtime: '27 hours',
+    lastPlayed: '2 days ago',
+    status: 'Installed',
+    action: 'Enjoy World',
+  },
+  {
+    id: 9,
+    title: 'Ets2',
+    description: 'Experience the thrill of realistic truck driving in the most immersive simulation game.',
+    rating: 4.5,
+    image: ets2,
+    playtime: '18 hours',
+    lastPlayed: 'Last month',
+    status: 'Installed',
+    action: 'Enjoy World',
+  },
+]
