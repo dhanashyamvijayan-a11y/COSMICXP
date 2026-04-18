@@ -8,7 +8,7 @@ import rdr from '../assets/Games/rdr.jpeg'
 import forza from '../assets/Games/forza.jpeg'
 import cyber from '../assets/Games/cyber.jpeg'
 import pubg from '../assets/Games/pubg.jpg'
-import gta from '../assets/Games/gta.jpg'
+import Gta from '../assets/Games/Gta.jpg'
 import minecraft from '../assets/Games/craft.jpg'
 import fortnite from '../assets/Games/fortnite.jpeg'
 import valorant from '../assets/Games/valorant.jpeg'
@@ -47,7 +47,7 @@ const games = [
     title: 'Gta V',
     description: 'Experience the sprawling city of Los Santos, where you can engage in high-stakes heists, intense shootouts, and a gripping storyline that immerses you in the criminal underworld.',
     rating: 4.5,
-    image: gta,
+    image: Gta,
     action: 'Roleplay game',
   },
 {
