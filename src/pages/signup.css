@@ -1,0 +1,134 @@
+.signup-page {
+  min-height: 100vh;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 16px;
+  background:
+    radial-gradient(ellipse at top, #19234b, transparent 60%),
+    #080a12;
+  color: #fff;
+  font-family: Arial, sans-serif;
+}
+
+.signup-card {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 440px;
+  padding: 34px;
+  border: 1px solid #303b63;
+  border-radius: 18px;
+  background: rgba(17, 22, 40, 0.96);
+  box-shadow: 0 0 45px #3559ff20;
+}
+
+.signup-logo {
+  display: block;
+  text-align: center;
+  color: #fff;
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+.signup-logo span {
+  color: #35baff;
+}
+
+.signup-tagline {
+  text-align: center;
+  color: #35baff;
+  font-size: 10px;
+  letter-spacing: 3px;
+  margin: 10px 0 28px;
+}
+
+.signup-card h1 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+
+.signup-subtitle {
+  color: #a4abc1;
+  font-size: 14px;
+  margin-bottom: 22px;
+}
+
+.signup-card label {
+  display: block;
+  font-size: 13px;
+  margin: 16px 0 8px;
+}
+
+.signup-card input {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: 13px;
+  border: 1px solid #35405e;
+  border-radius: 8px;
+  background: #0c1120;
+  color: white;
+  outline: none;
+}
+
+.signup-card input:focus {
+  border-color: #35baff;
+}
+
+.signup-password-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.signup-show-btn {
+  border: 0;
+  background: transparent;
+  color: #35baff;
+  cursor: pointer;
+}
+
+.signup-button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 24px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(90deg, #356bff, #25c8ff);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.signup-button:hover {
+  filter: brightness(1.12);
+}
+
+.signup-login-text {
+  text-align: center;
+  margin-top: 22px;
+  color: #a4abc1;
+  font-size: 13px;
+}
+
+.signup-login-text a,
+.signup-back-home {
+  color: #35baff;
+  text-decoration: none;
+}
+
+.signup-back-home {
+  display: block;
+  text-align: center;
+  margin-top: 18px;
+  font-size: 13px;
+}
+
+@media (max-width: 480px) {
+  .signup-card {
+    padding: 26px 20px;
+  }
+}
