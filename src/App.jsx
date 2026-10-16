@@ -9,6 +9,7 @@ import Footer from './COMPONENTS/Footer.jsx'
 import Login from './pages/login'
 import Signup from './pages/signup'
 import Profile from './pages/profile'
+import Dashboard from './pages/dashboard'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   )
