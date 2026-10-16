@@ -10,6 +10,7 @@ import Login from './pages/login'
 import Signup from './pages/signup'
 import Profile from './pages/profile'
 import Dashboard from './pages/dashboard'
+import ProtectedRoute from './COMPONENTS/ProtectedRoute'
 
 function App() {
   return (
@@ -28,7 +29,14 @@ function App() {
           }
         />
 
-        <Route path="/library" element={<Gamelibrary />} />
+       <Route
+  path="/library"
+  element={
+    <ProtectedRoute>
+      <Gamelibrary />
+    </ProtectedRoute>
+  }
+/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
