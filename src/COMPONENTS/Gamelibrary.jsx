@@ -12,6 +12,7 @@ import InputGroup from 'react-bootstrap/InputGroup'
 import { games as allGames } from './gameData'
 
 function Gamelibrary() {
+  console.log("COSMICXP NEW LIBRARY LOADED")
   const [games, setGames] = useState(allGames)
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All Categories')
