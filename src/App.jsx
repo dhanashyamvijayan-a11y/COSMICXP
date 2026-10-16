@@ -12,7 +12,7 @@ import Profile from './pages/profile'
 import Dashboard from './pages/dashboard'
 import ProtectedRoute from './COMPONENTS/ProtectedRoute'
 import ArcadeGames from './COMPONENTS/ArcadeGames'
-import ProtectedRoute from './COMPONENTS/ProtectedRoute'
+
 
 function App() {
   return (
