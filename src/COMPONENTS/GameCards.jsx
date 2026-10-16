@@ -1,9 +1,11 @@
+
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
+
 import rdr from '../assets/Games/rdr.jpeg'
 import forza from '../assets/Games/forza.jpeg'
 import cyber from '../assets/Games/cyber.jpeg'
@@ -17,66 +19,75 @@ import ets2 from '../assets/Games/ets2.jpeg'
 const games = [
   {
     title: 'Forza Horizon 5',
-    description: 'Experience the thrill of racing in the most immersive open-world driving game.',
+    description: 'Experience the thrill of racing in an immersive open-world driving adventure.',
     rating: 4.5,
     image: forza,
-    action: 'Experience the Thrill',
+    action: 'Explore Game',
+    genre: 'RACING',
   },
   {
     title: 'Red Dead Redemption',
-    description: 'Embark on a journey through the American frontier in this epic western adventure.',
+    description: 'Embark on an unforgettable journey through the American frontier.',
     rating: 4.8,
     image: rdr,
-    action: 'Experience the West',
+    action: 'Explore Game',
+    genre: 'ADVENTURE',
   },
   {
-    title: 'CYBERPUNK 2077',
-    description: 'Dive into the neon-lit streets of Night City, where you can customize your character, engage in intense combat, and explore a sprawling open world filled with danger and intrigue.',
+    title: 'Cyberpunk 2077',
+    description: 'Enter Night City, customize your character, and explore a neon-lit world.',
     rating: 4.7,
     image: cyber,
     action: 'Explore Night City',
+    genre: 'RPG',
   },
   {
     title: 'PUBG',
-    description: 'JDrop onto the island, scavenge for elite gear, outsmart intense enemies, survive the shrinking zone, and secure that elusive chicken dinner.',
+    description: 'Gear up, outsmart rivals, and fight to survive the ultimate battleground.',
     rating: 4.3,
     image: pubg,
-    action: 'Start battleground',
+    action: 'Enter Battleground',
+    genre: 'BATTLE ROYALE',
   },
-   {
-    title: 'Gta V',
-    description: 'Experience the sprawling city of Los Santos, where you can engage in high-stakes heists, intense shootouts, and a gripping storyline that immerses you in the criminal underworld.',
+  {
+    title: 'GTA V',
+    description: 'Explore Los Santos, pull off daring heists, and dive into the criminal underworld.',
     rating: 4.5,
     image: Gta,
-    action: 'Roleplay game',
+    action: 'Explore Game',
+    genre: 'ACTION',
   },
-{
+  {
     title: 'Minecraft',
-    description: 'Build, explore, and survive in your own 3D world.',
+    description: 'Build, explore, and survive in a world limited only by your imagination.',
     rating: 4.8,
     image: minecraft,
-    action: 'Enjoy world',
+    action: 'Enter World',
+    genre: 'SANDBOX',
   },
   {
     title: 'Fortnite',
-    description: 'Drop into the island, gather loot, outlast all opponents, and secure that epic Victory Royale today..',
+    description: 'Collect loot, outlast your opponents, and chase that Victory Royale.',
     rating: 4.6,
     image: fortnite,
-    action: 'Enjoy world',
-  },
-{
-    title: 'Valorant',
-    description: 'Engage in tactical team-based combat with unique agents and abilities.',
-    rating: 4.4,
-    image: valorant,
-    action: 'Enjoy world',
+    action: 'Explore Game',
+    genre: 'BATTLE ROYALE',
   },
   {
-    title: 'Ets2',
-    description: 'Experience the thrill of realistic truck driving in the most immersive simulation game.',
+    title: 'Valorant',
+    description: 'Master unique agents and compete in tactical team-based combat.',
+    rating: 4.4,
+    image: valorant,
+    action: 'Explore Game',
+    genre: 'TACTICAL FPS',
+  },
+  {
+    title: 'Euro Truck Simulator 2',
+    description: 'Travel across Europe in a realistic and immersive trucking simulation.',
     rating: 4.5,
     image: ets2,
-    action: 'Enjoy world',
+    action: 'Start Driving',
+    genre: 'SIMULATION',
   },
 ]
 
@@ -84,45 +95,82 @@ function GameCards() {
   const navigate = useNavigate()
 
   const handleActionClick = (game) => {
-    // Convert the game data to library format
     const libraryGame = {
-      id: Date.now(), // Generate unique ID
+      id: `${game.title}-${Date.now()}`,
       title: game.title,
       description: game.description,
       rating: game.rating,
       image: game.image,
       playtime: '0 hours',
       lastPlayed: 'Never',
-      status: 'Installed'
+      status: 'Installed',
     }
-    
+
     navigate('/library', { state: { newGame: libraryGame } })
   }
 
   return (
-    <Container id="featured-games" className="py-5">
-      <div id='fea'>
-      <h2 className="game-title mb-4 text-center">Featured Games</h2>
-      <Row xs={1} md={3} className="g-4">
-        {games.map((game) => (
-          <Col key={game.title}>
-            <Card className="h-100 shadow-sm">
-              <Card.Img src={game.image} alt={game.title} className="rounded-top" />
-              <Card.Body className="d-flex flex-column">
-                <Card.Title>{game.title}</Card.Title>
-                <Card.Text className="flex-grow-1">{game.description}</Card.Text>
-                <div className='text-accent fw-bold mb-2'>
-                  <span className="badge bg-success"> ★</span>{game.rating}
+    <Container id="featured-games" className="cosmic-games-section py-5">
+      <div id="fea">
+        <div className="cosmic-section-heading text-center mb-5">
+          <span className="cosmic-eyebrow">
+            YOUR NEXT ADVENTURE STARTS HERE
+          </span>
+          <h2 className="game-title mt-2 mb-3">
+            Featured <span>Games</span>
+          </h2>
+          <p className="cosmic-section-subtitle">
+            Discover your next world. Choose your game. Make it legendary.
+          </p>
+        </div>
+
+        <Row xs={1} sm={2} lg={3} className="g-4">
+          {games.map((game) => (
+            <Col key={game.title}>
+              <Card className="cosmic-game-card h-100">
+                <div className="cosmic-game-image-wrap">
+                  <Card.Img
+                    variant="top"
+                    src={game.image}
+                    alt={game.title}
+                    className="cosmic-game-image"
+                    loading="lazy"
+                  />
+                  <span className="cosmic-game-genre">
+                    {game.genre}
+                  </span>
+                  <span className="cosmic-game-rating">
+                    <span aria-hidden="true">★</span>{' '}
+                    {game.rating.toFixed(1)}
+                  </span>
                 </div>
-                <Button variant="primary" onClick={() => handleActionClick(game)}>{game.action}</Button>
-              </Card.Body>
-            </Card>
-          </Col>
-        ))}
-      </Row>
+
+                <Card.Body className="cosmic-game-body d-flex flex-column">
+                  <Card.Title className="cosmic-game-title">
+                    {game.title}
+                  </Card.Title>
+
+                  <Card.Text className="cosmic-game-description flex-grow-1">
+                    {game.description}
+                  </Card.Text>
+
+                  <Button
+                    className="cosmic-game-button w-100"
+                    onClick={() => handleActionClick(game)}
+                  >
+                    {game.action}
+                    <span className="cosmic-button-arrow" aria-hidden="true">
+                      {' '}↗
+                    </span>
+                  </Button>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </div>
     </Container>
   )
 }
 
-export default GameCards;
+export default GameCards
