@@ -119,3 +119,89 @@ input, textarea, select, .form-control {
     animation-duration: 0.01ms !important;
   }
 }
+
+/* CosmicXP Smart Game Library */
+
+.cosmic-library {
+  min-height: 80vh;
+  color: #f1f5ff;
+}
+
+.cosmic-library .library-filter-panel {
+  background: rgba(15, 23, 48, 0.88);
+  border: 1px solid rgba(120, 140, 255, 0.22);
+  border-radius: 18px;
+  color: #f1f5ff;
+}
+
+.cosmic-library .form-label {
+  color: #d9e2ff;
+  font-weight: 600;
+}
+
+.cosmic-library .form-control,
+.cosmic-library .form-select,
+.cosmic-library .input-group-text {
+  background-color: #101a32;
+  border-color: #344263;
+  color: #f1f5ff;
+}
+
+.cosmic-library .form-control::placeholder {
+  color: #929fbb;
+}
+
+.cosmic-library .form-control:focus,
+.cosmic-library .form-select:focus {
+  border-color: #6e8cff;
+  box-shadow: 0 0 0 0.2rem rgba(110, 140, 255, 0.18);
+}
+
+.cosmic-library .form-select option {
+  background: #101a32;
+  color: #f1f5ff;
+}
+
+.cosmic-library .library-card {
+  overflow: hidden;
+  background: linear-gradient(145deg, #151f3c, #0b1124);
+  color: #f1f5ff;
+  border: 1px solid rgba(120, 140, 255, 0.2);
+  border-radius: 16px;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.cosmic-library .library-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(75, 90, 220, 0.2) !important;
+}
+
+.cosmic-library .library-card .card-text {
+  color: #bdc8e2;
+}
+
+.cosmic-library .library-card .text-muted {
+  color: #a5b1cb !important;
+}
+
+.cosmic-library .game-title {
+  color: #f5f7ff;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.cosmic-library .btn-info {
+  color: #081225;
+  font-weight: 600;
+}
+
+@media (max-width: 576px) {
+  .cosmic-library {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .cosmic-library .library-card .card-img-top {
+    height: 190px !important;
+  }
+}
