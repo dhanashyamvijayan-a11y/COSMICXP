@@ -1,411 +1,229 @@
 
-import React, { useState, useEffect, useMemo } from 'react'
-import { useNavigate, useLocation } from 'react-router-dom'
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
-import Col from 'react-bootstrap/Col'
-import Container from 'react-bootstrap/Container'
-import Row from 'react-bootstrap/Row'
-import Badge from 'react-bootstrap/Badge'
-import Form from 'react-bootstrap/Form'
-import InputGroup from 'react-bootstrap/InputGroup'
-import { games as allGames } from './gameData'
+import React, { useEffect, useRef, useState } from 'react'
 
 function Gamelibrary() {
-  console.log("COSMICXP NEW LIBRARY LOADED")
-  const [games, setGames] = useState(allGames)
-  const [search, setSearch] = useState('')
-  const [category, setCategory] = useState('All Categories')
-  const [status, setStatus] = useState('All Statuses')
-  const [sortBy, setSortBy] = useState('default')
+  const canvasRef = useRef(null)
+  const keysRef = useRef({})
+  const [playing, setPlaying] = useState(false)
+  const [gameOver, setGameOver] = useState(false)
+  const [score, setScore] = useState(0)
 
-  const navigate = useNavigate()
-  const location = useLocation()
-
-  // Library-ilekku navigation vazhi varunna game add cheyyuka
   useEffect(() => {
-    const newGame = location.state?.newGame
+    if (!playing) return
 
-    if (!newGame) return
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
 
-    setGames(previousGames => {
-      const exists = previousGames.some(
-        game => game.title === newGame.title
-      )
+    let active = true
+    let frame = 0
+    let points = 0
+    let player = { x: 175, y: 340, w: 30, h: 30 }
+    let bullets = []
+    let enemies = []
+    let lastShot = 0
+    let animationId
 
-      return exists ? previousGames : [...previousGames, newGame]
-    })
+    const keyDown = (event) => {
+      keysRef.current[event.key.toLowerCase()] = true
 
-    navigate(location.pathname, {
-      replace: true,
-      state: null
-    })
-  }, [location.state, location.pathname, navigate])
-
-  const handleRemoveGame = (gameId) => {
-    setGames(previousGames =>
-      previousGames.filter(game => game.id !== gameId)
-    )
-  }
-
-  const handleBackClick = () => {
-    navigate('/')
-  }
-
-  const getStatusBadgeVariant = (gameStatus) => {
-    switch (gameStatus) {
-      case 'Installed':
-        return 'success'
-      case 'Update Available':
-        return 'warning'
-      case 'Downloading':
-        return 'info'
-      default:
-        return 'secondary'
-    }
-  }
-
-  // Game category / genre list automatic aayi create cheyyunnu
-  const categories = useMemo(() => {
-    const uniqueCategories = games
-      .map(game => game.category || game.genre)
-      .filter(Boolean)
-
-    return [
-      'All Categories',
-      ...new Set(uniqueCategories)
-    ]
-  }, [games])
-
-  // Search + category + status + sorting
-  const filteredGames = useMemo(() => {
-    let result = games.filter(game => {
-      const title = (game.title || '').toLowerCase()
-      const description = (game.description || '').toLowerCase()
-      const gameCategory = game.category || game.genre || ''
-      const gameStatus = game.status || 'Not Installed'
-
-      const matchesSearch =
-        title.includes(search.toLowerCase()) ||
-        description.includes(search.toLowerCase())
-
-      const matchesCategory =
-        category === 'All Categories' ||
-        gameCategory === category
-
-      const matchesStatus =
-        status === 'All Statuses' ||
-        gameStatus === status
-
-      return matchesSearch && matchesCategory && matchesStatus
-    })
-
-    if (sortBy === 'rating') {
-      result.sort(
-        (a, b) => (Number(b.rating) || 0) - (Number(a.rating) || 0)
-      )
-    } else if (sortBy === 'name') {
-      result.sort((a, b) =>
-        (a.title || '').localeCompare(b.title || '')
-      )
+      if (
+        ['arrowleft', 'arrowright', ' '].includes(
+          event.key.toLowerCase()
+        )
+      ) {
+        event.preventDefault()
+      }
     }
 
-    return result
-  }, [games, search, category, status, sortBy])
+    const keyUp = (event) => {
+      keysRef.current[event.key.toLowerCase()] = false
+    }
 
-  const totalPlaytime = games.reduce((total, game) => {
-    const playtime = String(game.playtime || '0')
-    const hours = parseInt(playtime.replace(/\D/g, ''), 10) || 0
-    return total + hours
-  }, 0)
+    const draw = () => {
+      if (!active) return
 
-  const clearFilters = () => {
-    setSearch('')
-    setCategory('All Categories')
-    setStatus('All Statuses')
-    setSortBy('default')
+      ctx.fillStyle = '#070b1c'
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+      // Animated stars
+      for (let i = 0; i < 65; i++) {
+        const x = (i * 83) % canvas.width
+        const y = (i * 47 + frame * 2) % canvas.height
+
+        ctx.fillStyle = '#9aaaff'
+        ctx.fillRect(x, y, 2, 2)
+      }
+
+      const keys = keysRef.current
+
+      if (keys.arrowleft || keys.a) player.x -= 5
+      if (keys.arrowright || keys.d) player.x += 5
+
+      player.x = Math.max(
+        0,
+        Math.min(canvas.width - player.w, player.x)
+      )
+
+      // Shoot with space
+      if (keys[' '] && frame - lastShot > 10) {
+        bullets.push({
+          x: player.x + 13,
+          y: player.y
+        })
+        lastShot = frame
+      }
+
+      // Spaceship
+      ctx.fillStyle = '#45eaff'
+      ctx.beginPath()
+      ctx.moveTo(player.x + 15, player.y)
+      ctx.lineTo(player.x, player.y + 30)
+      ctx.lineTo(player.x + 30, player.y + 30)
+      ctx.closePath()
+      ctx.fill()
+
+      // Bullets
+      ctx.fillStyle = '#ffe66d'
+
+      bullets.forEach((bullet) => {
+        bullet.y -= 7
+        ctx.fillRect(bullet.x, bullet.y, 4, 12)
+      })
+
+      bullets = bullets.filter((bullet) => bullet.y > -15)
+
+      // Enemies
+      frame++
+
+      if (frame % 45 === 0) {
+        enemies.push({
+          x: Math.random() * (canvas.width - 28),
+          y: -30,
+          size: 26
+        })
+      }
+
+      for (const enemy of enemies) {
+        enemy.y += 2
+
+        ctx.fillStyle = '#ff477e'
+        ctx.fillRect(
+          enemy.x,
+          enemy.y,
+          enemy.size,
+          enemy.size
+        )
+
+        // Collision with spaceship
+        if (
+          enemy.x < player.x + player.w &&
+          enemy.x + enemy.size > player.x &&
+          enemy.y < player.y + player.h &&
+          enemy.y + enemy.size > player.y
+        ) {
+          active = false
+          setGameOver(true)
+          setPlaying(false)
+          return
+        }
+
+        // Collision with bullets
+        for (const bullet of bullets) {
+          if (
+            bullet.x >= enemy.x &&
+            bullet.x <= enemy.x + enemy.size &&
+            bullet.y <= enemy.y + enemy.size &&
+            bullet.y >= enemy.y
+          ) {
+            points += 10
+            setScore(points)
+            enemy.y = canvas.height + 100
+            bullet.y = -100
+            break
+          }
+        }
+      }
+
+      enemies = enemies.filter(
+        (enemy) => enemy.y < canvas.height + 40
+      )
+
+      animationId = requestAnimationFrame(draw)
+    }
+
+    window.addEventListener('keydown', keyDown)
+    window.addEventListener('keyup', keyUp)
+
+    draw()
+
+    return () => {
+      active = false
+      cancelAnimationFrame(animationId)
+      window.removeEventListener('keydown', keyDown)
+      window.removeEventListener('keyup', keyUp)
+      keysRef.current = {}
+    }
+  }, [playing])
+
+  const startGame = () => {
+    keysRef.current = {}
+    setScore(0)
+    setGameOver(false)
+    setPlaying(true)
   }
 
   return (
-    <Container className="py-5 cosmic-library">
-
-      {/* Header */}
-      <div className="text-center mb-5">
-        <p className="text-info fw-bold text-uppercase">
-          YOUR GAMING COLLECTION
-        </p>
-
-        <h1 className="game-title mb-3">
-          My Game Library
-        </h1>
-
-        <p className="text-muted">
-          Discover, search and manage your favourite games.
-        </p>
-
-        <div className="d-flex justify-content-center gap-3 flex-wrap mt-4">
-          <Badge bg="primary" className="p-2">
-            {games.length} Total Games
-          </Badge>
-
-          <Badge bg="success" className="p-2">
-            {games.filter(game => game.status === 'Installed').length} Installed
-          </Badge>
-
-          <Badge bg="dark" className="p-2">
-            {totalPlaytime}+ Hours Played
-          </Badge>
-        </div>
+    <main className="space-game">
+      <div className="space-game-header">
+        <p className="space-eyebrow">COSMICXP ARCADE</p>
+        <h1>SPACE SHOOTER</h1>
+        <p>Survive the galaxy. Destroy the enemies.</p>
       </div>
 
-      {/* Search and filters */}
-      <Card className="library-filter-panel mb-5">
-        <Card.Body className="p-3 p-md-4">
-          <Row className="g-3">
-
-            <Col xs={12} md={6}>
-              <Form.Label>Search Games</Form.Label>
-
-              <InputGroup>
-                <InputGroup.Text>🔍</InputGroup.Text>
-
-                <Form.Control
-                  type="search"
-                  placeholder="Search by game name or description..."
-                  value={search}
-                  onChange={event => setSearch(event.target.value)}
-                />
-
-                {search && (
-                  <Button
-                    variant="outline-secondary"
-                    onClick={() => setSearch('')}
-                  >
-                    Clear
-                  </Button>
-                )}
-              </InputGroup>
-            </Col>
-
-            <Col xs={12} sm={6} md={3}>
-              <Form.Label>Category</Form.Label>
-
-              <Form.Select
-                value={category}
-                onChange={event => setCategory(event.target.value)}
-              >
-                {categories.map(item => (
-                  <option key={item} value={item}>
-                    {item}
-                  </option>
-                ))}
-              </Form.Select>
-            </Col>
-
-            <Col xs={12} sm={6} md={3}>
-              <Form.Label>Installation Status</Form.Label>
-
-              <Form.Select
-                value={status}
-                onChange={event => setStatus(event.target.value)}
-              >
-                <option value="All Statuses">All Statuses</option>
-                <option value="Installed">Installed</option>
-                <option value="Not Installed">Not Installed</option>
-                <option value="Downloading">Downloading</option>
-                <option value="Update Available">Update Available</option>
-              </Form.Select>
-            </Col>
-
-            <Col xs={12} sm={6}>
-              <Form.Label>Sort Games</Form.Label>
-
-              <Form.Select
-                value={sortBy}
-                onChange={event => setSortBy(event.target.value)}
-              >
-                <option value="default">Default Order</option>
-                <option value="name">Name: A to Z</option>
-                <option value="rating">Highest Rated</option>
-              </Form.Select>
-            </Col>
-
-            <Col xs={12} sm={6} className="d-flex align-items-end">
-              <Button
-                variant="outline-info"
-                className="w-100"
-                onClick={clearFilters}
-              >
-                Reset All Filters
-              </Button>
-            </Col>
-
-          </Row>
-        </Card.Body>
-      </Card>
-
-      {/* Results heading */}
-      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
-        <h4 className="mb-0">
-          Explore Games
-        </h4>
-
-        <span className="text-muted">
-          Showing {filteredGames.length} of {games.length} games
-        </span>
+      <div className="space-score">
+        <span>SCORE</span>
+        <strong>{score}</strong>
       </div>
 
-      {/* Game cards */}
-      {filteredGames.length > 0 ? (
-        <Row xs={1} md={2} lg={3} className="g-4">
+      <div className="space-game-board">
+        <canvas
+          ref={canvasRef}
+          width={360}
+          height={400}
+          aria-label="Space Shooter game"
+        />
 
-          {filteredGames.map((game, index) => (
-            <Col key={game.id ?? game.title ?? index}>
+        {(!playing || gameOver) && (
+          <div className="space-overlay">
+            <div className="space-overlay-icon">
+              {gameOver ? '💥' : '🚀'}
+            </div>
 
-              <Card className="h-100 shadow-sm library-card">
+            <h2>
+              {gameOver ? 'GAME OVER' : 'READY, PILOT?'}
+            </h2>
 
-                <div className="position-relative">
-                  <Card.Img
-                    variant="top"
-                    src={game.image}
-                    alt={game.title || 'Game cover'}
-                    style={{
-                      height: '220px',
-                      objectFit: 'cover'
-                    }}
-                  />
+            <p>
+              {gameOver
+                ? `Your final score: ${score}`
+                : 'Enter the galaxy and start your mission.'}
+            </p>
 
-                  <Badge
-                    bg={getStatusBadgeVariant(
-                      game.status || 'Not Installed'
-                    )}
-                    className="position-absolute top-0 end-0 m-3"
-                  >
-                    {game.status || 'Not Installed'}
-                  </Badge>
-                </div>
-
-                <Card.Body className="d-flex flex-column">
-
-                  <div className="d-flex justify-content-between align-items-start gap-2">
-                    <Card.Title className="mb-2">
-                      {game.title}
-                    </Card.Title>
-
-                    <Button
-                      variant="outline-danger"
-                      size="sm"
-                      title="Remove from library"
-                      aria-label={`Remove ${game.title}`}
-                      onClick={() => handleRemoveGame(game.id)}
-                    >
-                      <i className="bi bi-trash" />
-                    </Button>
-                  </div>
-
-                  {(game.category || game.genre) && (
-                    <div className="mb-2">
-                      <Badge bg="secondary">
-                        {game.category || game.genre}
-                      </Badge>
-                    </div>
-                  )}
-
-                  <Card.Text className="flex-grow-1">
-                    {game.description || 'No description available.'}
-                  </Card.Text>
-
-                  <div className="d-flex justify-content-between gap-2 mb-2">
-                    <small>
-                      ⏱️ {game.playtime || '0 hours'}
-                    </small>
-
-                    <small>
-                      ⭐ {game.rating ?? 'N/A'}
-                    </small>
-                  </div>
-
-                  <small className="text-muted mb-3">
-                    Last played: {game.lastPlayed || 'Never'}
-                  </small>
-
-                  <div className="d-flex gap-2 mt-auto">
-                    <Button
-                      variant="success"
-                      className="flex-fill"
-                      onClick={() => {
-                        if (game.status === 'Installed') {
-                          alert(`Ready to play: ${game.title}`)
-                        } else {
-                          alert(
-                            `${game.title} is not installed yet.`
-                          )
-                        }
-                      }}
-                    >
-                      <i className="bi bi-play-fill me-1" />
-                      Play
-                    </Button>
-
-                    <Button
-                      variant="outline-info"
-                      title="Game information"
-                      onClick={() => {
-                        alert(
-                          `${game.title}\n\n${game.description || 'No description available.'}`
-                        )
-                      }}
-                    >
-                      <i className="bi bi-info-circle" />
-                    </Button>
-                  </div>
-
-                </Card.Body>
-              </Card>
-
-            </Col>
-          ))}
-
-        </Row>
-      ) : (
-        <div className="text-center py-5">
-          <div className="display-1 mb-3">🎮</div>
-
-          <h4>No games found</h4>
-
-          <p className="text-muted">
-            Try another search term or change your filters.
-          </p>
-
-          <Button variant="info" onClick={clearFilters}>
-            Clear All Filters
-          </Button>
-        </div>
-      )}
-
-      {/* Bottom buttons */}
-      <div className="d-flex justify-content-center gap-3 flex-wrap mt-5">
-        <Button
-          variant="outline-secondary"
-          size="lg"
-          onClick={handleBackClick}
-        >
-          <i className="bi bi-arrow-left me-2" />
-          Back to Games
-        </Button>
-
-        {games.length === 0 && (
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate('/')}
-          >
-            Browse Games
-          </Button>
+            <button
+              className="space-play-button"
+              onClick={startGame}
+            >
+              {gameOver ? 'PLAY AGAIN' : 'START GAME'}
+            </button>
+          </div>
         )}
       </div>
 
-    </Container>
+      <div className="space-controls">
+        <p><strong>MOVE</strong> ← → or A / D</p>
+        <p><strong>SHOOT</strong> Spacebar</p>
+      </div>
+    </main>
   )
 }
 
