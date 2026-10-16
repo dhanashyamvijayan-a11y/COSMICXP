@@ -1,61 +1,421 @@
-.profile-container {
-  min-height: 80vh;
+
+.xp-profile-page {
+  min-height: 100vh;
+  padding: 48px 20px 64px;
+  color: #f5f7ff;
+  background:
+    radial-gradient(ellipse at 10% 0%, rgba(102, 85, 232, .17), transparent 40%),
+    radial-gradient(ellipse at 90% 20%, rgba(101, 232, 255, .08), transparent 35%),
+    #090d19;
+}
+
+.xp-profile-container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.xp-profile-heading,
+.xp-panel-heading {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.xp-profile-heading {
+  margin-bottom: 28px;
+}
+
+.xp-eyebrow {
+  color: #65e8ff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .18em;
+}
+
+.xp-profile-heading h1 {
+  margin: 8px 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 850;
+  letter-spacing: -.05em;
+}
+
+.xp-profile-heading h1 span {
+  color: #a69aff;
+}
+
+.xp-profile-heading p,
+.xp-player-info p {
+  color: #aab3cb;
+}
+
+.xp-profile-hero,
+.xp-stat-card,
+.xp-panel {
+  border: 1px solid rgba(160, 174, 220, .16);
+  background: linear-gradient(145deg, rgba(24, 31, 55, .96), rgba(12, 16, 31, .96));
+  box-shadow: 0 16px 42px rgba(0, 0, 0, .2);
+}
+
+.xp-profile-hero {
+  display: flex;
+  align-items: center;
+  gap: 24px;
   padding: 30px;
-  background: #0b0f19;
+  border-radius: 22px;
+}
+
+.xp-avatar {
+  position: relative;
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 104px;
+  height: 104px;
+  border: 2px solid #65e8ff;
+  border-radius: 28px;
   color: white;
+  background: linear-gradient(135deg, #6555e8, #182c50);
+  box-shadow: 0 0 30px rgba(101, 232, 255, .16);
+  font-size: 2rem;
+  font-weight: 850;
 }
 
-.profile-card {
-  width: 100%;
-  max-width: 450px;
-  padding: 35px;
+.xp-online-dot {
+  position: absolute;
+  right: 3px;
+  bottom: 3px;
+  width: 15px;
+  height: 15px;
+  border: 3px solid #151b2b;
+  border-radius: 50%;
+  background: #48e6a0;
+}
+
+.xp-player-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.xp-member-tag {
+  color: #a69aff;
+  font-size: .7rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+}
+
+.xp-player-info h2 {
+  margin: 8px 0 5px;
+  overflow-wrap: anywhere;
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  font-weight: 800;
+}
+
+.xp-player-info p {
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.xp-player-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.xp-player-badges span,
+.xp-level-badge {
+  padding: 8px 12px;
+  border: 1px solid rgba(166, 154, 255, .25);
+  border-radius: 10px;
+  background: rgba(105, 87, 230, .1);
+  color: #d8d3ff;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.xp-level-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 130px;
+  padding: 18px 14px;
   text-align: center;
-  background: #151b2b;
-  border: 1px solid #303950;
-  border-radius: 18px;
-  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
 }
 
-.profile-avatar {
-  width: 90px;
-  height: 90px;
-  margin: 0 auto 20px;
+.xp-level-badge span,
+.xp-level-badge small {
+  color: #aab3cb;
+  font-size: .62rem;
+  letter-spacing: .08em;
+}
+
+.xp-level-badge strong {
+  color: #65e8ff;
+  font-size: 2.5rem;
+  line-height: 1.1;
+}
+
+.xp-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 22px 0;
+}
+
+.xp-stat-card {
+  padding: 22px;
+  border-radius: 18px;
+  transition: transform .25s ease, border-color .25s ease;
+}
+
+.xp-stat-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(101, 232, 255, .5);
+}
+
+.xp-stat-icon {
+  font-size: 1.5rem;
+}
+
+.xp-stat-card p {
+  margin: 14px 0 8px;
+  color: #aab3cb;
+  font-size: .9rem;
+}
+
+.xp-stat-card h3 {
+  margin: 0 0 8px;
+  font-size: 2rem;
+  font-weight: 850;
+}
+
+.xp-stat-note {
+  color: #7e8ba9;
+  font-size: .75rem;
+}
+
+.xp-panel {
+  margin-top: 22px;
+  padding: 26px;
+  border-radius: 20px;
+}
+
+.xp-panel-heading h2 {
+  margin: 7px 0 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.xp-progress-label {
+  color: #65e8ff;
+  font-size: .85rem;
+  font-weight: 800;
+}
+
+.xp-progress-track {
+  height: 12px;
+  margin-top: 26px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #252b42;
+}
+
+.xp-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #6655e8, #65e8ff);
+  box-shadow: 0 0 18px rgba(101, 232, 255, .3);
+  transition: width .5s ease;
+}
+
+.xp-progress-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+  color: #9ca8c4;
+  font-size: .75rem;
+}
+
+.xp-achievement-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.xp-achievement {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 15px;
+  border: 1px solid rgba(160, 174, 220, .12);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.xp-achievement > span:first-child {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: rgba(105, 87, 230, .14);
+  font-size: 1.35rem;
+}
+
+.xp-achievement div {
+  flex: 1;
+}
+
+.xp-achievement h3 {
+  margin: 0 0 4px;
+  font-size: .95rem;
+  font-weight: 750;
+}
+
+.xp-achievement p {
+  margin: 0;
+  color: #9ca8c4;
+  font-size: .8rem;
+}
+
+.xp-unlocked,
+.xp-locked {
+  font-size: .65rem;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-align: right;
+}
+
+.xp-unlocked {
+  color: #65e8b4;
+}
+
+.xp-locked {
+  color: #a69aff;
+}
+
+.xp-profile-footer {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #252f48;
-  border-radius: 50%;
-  font-size: 42px;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
 }
 
-.profile-card h1 {
-  margin-bottom: 25px;
-  color: #8b9cff;
+.xp-profile-footer p {
+  flex-basis: 100%;
+  margin-bottom: 5px;
+  color: #8f9bb8;
+  font-size: .72rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-align: center;
 }
 
-.profile-card p {
-  padding: 12px;
-  margin: 10px 0;
-  text-align: left;
-  overflow-wrap: anywhere;
-  background: #20283b;
-  border-radius: 8px;
-}
-
-.profile-card button {
-  width: 100%;
-  margin-top: 20px;
-  padding: 12px;
-  color: white;
-  background: #6655e8;
-  border: none;
-  border-radius: 8px;
+.xp-primary-button,
+.xp-outline-button,
+.xp-logout-button {
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 800;
   cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
 }
 
-.profile-card button:hover {
-  background: #5140cf;
+.xp-primary-button {
+  border: 0;
+  color: #08101d;
+  background: linear-gradient(100deg, #65e8ff, #a69aff);
+}
+
+.xp-outline-button,
+.xp-logout-button {
+  border: 1px solid rgba(166, 154, 255, .35);
+  color: #e7e9ff;
+  background: rgba(255, 255, 255, .03);
+}
+
+.xp-logout-button {
+  border-color: rgba(255, 110, 130, .3);
+  color: #ff9eae;
+}
+
+.xp-primary-button:hover,
+.xp-outline-button:hover,
+.xp-logout-button:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 700px) {
+  .xp-profile-page {
+    padding: 30px 14px 45px;
+  }
+
+  .xp-profile-hero {
+    flex-wrap: wrap;
+    padding: 22px;
+  }
+
+  .xp-player-info {
+    flex-basis: calc(100% - 130px);
+  }
+
+  .xp-level-badge {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .xp-level-badge strong {
+    font-size: 1.8rem;
+  }
+
+  .xp-stats-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .xp-stat-card {
+    padding: 18px;
+  }
+
+  .xp-stat-card h3 {
+    font-size: 1.7rem;
+  }
+
+  .xp-panel {
+    padding: 20px 16px;
+  }
+
+  .xp-achievement {
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .xp-achievement div {
+    min-width: 0;
+  }
+
+  .xp-achievement > span:last-child {
+    margin-left: 60px;
+  }
+
+  .xp-progress-footer {
+    font-size: .68rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-stat-card,
+  .xp-progress-fill,
+  .xp-primary-button,
+  .xp-outline-button,
+  .xp-logout-button {
+    transition: none;
+  }
 }
