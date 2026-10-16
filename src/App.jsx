@@ -11,6 +11,8 @@ import Signup from './pages/signup'
 import Profile from './pages/profile'
 import Dashboard from './pages/dashboard'
 import ProtectedRoute from './COMPONENTS/ProtectedRoute'
+import ArcadeGames from './COMPONENTS/ArcadeGames'
+import ProtectedRoute from './COMPONENTS/ProtectedRoute'
 
 function App() {
   return (
@@ -34,6 +36,14 @@ function App() {
   element={
     <ProtectedRoute>
       <Gamelibrary />
+    </ProtectedRoute>
+  }
+/>
+        <Route
+  path="/arcade"
+  element={
+    <ProtectedRoute>
+      <ArcadeGames />
     </ProtectedRoute>
   }
 />
