@@ -9,7 +9,14 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:5173" }));
+
+app.use(cors({
+  origin: [
+    "http://localhost:5173",
+    "https://cosmicxp-42do.vercel.app"
+  ]
+}));
+
 app.use(express.json());
 
 const UserSchema = new mongoose.Schema({
