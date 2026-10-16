@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./signup.css";
@@ -25,7 +26,7 @@ export default function Signup() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/signup",
+        "https://cosmicxp-backend.onrender.com/api/auth/signup",
         {
           method: "POST",
           headers: {
@@ -94,6 +95,7 @@ export default function Signup() {
           value={form.password}
           onChange={handleChange}
           required
+          minLength={8}
         />
 
         <input
@@ -103,6 +105,7 @@ export default function Signup() {
           value={form.confirmPassword}
           onChange={handleChange}
           required
+          minLength={8}
         />
 
         <button type="submit">Sign Up</button>
