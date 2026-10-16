@@ -205,3 +205,77 @@ input, textarea, select, .form-control {
     height: 190px !important;
   }
 }
+
+/* CosmicXP Global Dark Theme */
+
+html,
+body,
+#root {
+  min-height: 100%;
+  margin: 0;
+  background: #080b18 !important;
+  color: #f1f5ff;
+}
+
+body {
+  min-height: 100vh;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.App,
+.app,
+main {
+  background-color: transparent;
+  color: inherit;
+}
+
+/* Bootstrap white backgrounds */
+.container,
+.container-fluid {
+  color: inherit;
+}
+
+.card {
+  background: linear-gradient(145deg, #151c35, #0b1020);
+  color: #f1f5ff;
+  border: 1px solid rgba(130, 150, 255, 0.2);
+}
+
+.card .text-muted {
+  color: #aab6d3 !important;
+}
+
+section {
+  color: #f1f5ff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  color: inherit;
+}
+
+/* Inputs */
+.form-control,
+.form-select {
+  background-color: #111a30;
+  color: #f1f5ff;
+  border-color: #354361;
+}
+
+.form-control::placeholder {
+  color: #9ba8c4;
+}
+
+/* Dropdown options */
+.form-select option {
+  background: #111a30;
+  color: #f1f5ff;
+}
