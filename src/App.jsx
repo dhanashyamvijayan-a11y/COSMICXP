@@ -1,18 +1,19 @@
-
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
+
 import AppNavbar from './COMPONENTS/Navbar.jsx'
 import Hero from './COMPONENTS/Hero.jsx'
 import GameCards from './COMPONENTS/GameCards.jsx'
 import Gamelibrary from './COMPONENTS/Gamelibrary'
 import Footer from './COMPONENTS/Footer.jsx'
+
 import Login from './pages/login'
 import Signup from './pages/signup'
 import Profile from './pages/profile'
 import Dashboard from './pages/dashboard'
+
 import ProtectedRoute from './COMPONENTS/ProtectedRoute'
 import ArcadeGames from './COMPONENTS/ArcadeGames'
-
 
 function App() {
   return (
@@ -31,22 +32,24 @@ function App() {
           }
         />
 
-       <Route
-  path="/library"
-  element={
-    <ProtectedRoute>
-      <Gamelibrary />
-    </ProtectedRoute>
-  }
-/>
         <Route
-  path="/arcade"
-  element={
-    <ProtectedRoute>
-      <ArcadeGames />
-    </ProtectedRoute>
-  }
-/>
+          path="/library"
+          element={
+            <ProtectedRoute>
+              <Gamelibrary />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/arcade"
+          element={
+            <ProtectedRoute>
+              <ArcadeGames />
+            </ProtectedRoute>
+          }
+        />
+
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile" element={<Profile />} />
