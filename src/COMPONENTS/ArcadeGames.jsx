@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './ArcadeGames.css'
 
 const GAMES = [
@@ -32,15 +33,36 @@ function ArcadeGame({ game }) {
     let raf
     let lastShot = 0
 
-    const player = { x: W / 2 - 15, y: H - 55, w: 30, h: 30 }
+    const player = {
+      x: W / 2 - 15,
+      y: H - 55,
+      w: 30,
+      h: 30,
+      vy: 0,
+    }
+
     let bullets = []
     let enemies = []
     let food = { x: 10, y: 10 }
     let snake = [{ x: 8, y: 8 }]
     let direction = { x: 1, y: 0 }
     let nextDirection = { x: 1, y: 0 }
-    let ball = { x: W / 2, y: H - 70, vx: 3, vy: -3, r: 7 }
-    let paddle = { x: W / 2 - 45, y: H - 30, w: 90, h: 10 }
+
+    let ball = {
+      x: W / 2,
+      y: H - 70,
+      vx: 3,
+      vy: -3,
+      r: 7,
+    }
+
+    let paddle = {
+      x: W / 2 - 45,
+      y: H - 30,
+      w: 90,
+      h: 10,
+    }
+
     let bricks = []
 
     for (let row = 0; row < 5; row++) {
@@ -51,30 +73,48 @@ function ArcadeGame({ game }) {
           w: 37,
           h: 15,
           alive: true,
-          color: ['#45eaff', '#a855f7', '#ff4fd8', '#ffd166', '#48ff9b'][row]
+          color: [
+            '#45eaff',
+            '#a855f7',
+            '#ff4fd8',
+            '#ffd166',
+            '#48ff9b',
+          ][row],
         })
       }
     }
 
     const randomFood = () => ({
       x: Math.floor(Math.random() * 17) + 1,
-      y: Math.floor(Math.random() * 17) + 1
+      y: Math.floor(Math.random() * 17) + 1,
     })
 
     food = randomFood()
 
     function keyDown(e) {
       const k = e.key.toLowerCase()
-      if (['arrowleft', 'arrowright', 'arrowup', 'arrowdown', ' '].includes(k)) {
+
+      if (
+        ['arrowleft', 'arrowright', 'arrowup', 'arrowdown', ' '].includes(k)
+      ) {
         e.preventDefault()
       }
+
       keys.current[k] = true
 
       if (game.id === 'snake') {
-        if (k === 'arrowleft' || k === 'a') nextDirection = { x: -1, y: 0 }
-        if (k === 'arrowright' || k === 'd') nextDirection = { x: 1, y: 0 }
-        if (k === 'arrowup' || k === 'w') nextDirection = { x: 0, y: -1 }
-        if (k === 'arrowdown' || k === 's') nextDirection = { x: 0, y: 1 }
+        if (k === 'arrowleft' || k === 'a') {
+          nextDirection = { x: -1, y: 0 }
+        }
+        if (k === 'arrowright' || k === 'd') {
+          nextDirection = { x: 1, y: 0 }
+        }
+        if (k === 'arrowup' || k === 'w') {
+          nextDirection = { x: 0, y: -1 }
+        }
+        if (k === 'arrowdown' || k === 's') {
+          nextDirection = { x: 0, y: 1 }
+        }
       }
     }
 
@@ -83,6 +123,7 @@ function ArcadeGame({ game }) {
     }
 
     function endGame() {
+      if (!active) return
       active = false
       setOver(true)
       setRunning(false)
@@ -101,14 +142,17 @@ function ArcadeGame({ game }) {
     function drawSnake() {
       if (frame % 8 === 0) {
         direction = nextDirection
+
         const head = {
           x: snake[0].x + direction.x,
-          y: snake[0].y + direction.y
+          y: snake[0].y + direction.y,
         }
 
         if (
-          head.x < 0 || head.x >= 20 ||
-          head.y < 0 || head.y >= 20 ||
+          head.x < 0 ||
+          head.x >= 20 ||
+          head.y < 0 ||
+          head.y >= 20 ||
           snake.some(s => s.x === head.x && s.y === head.y)
         ) {
           endGame()
@@ -151,25 +195,29 @@ function ArcadeGame({ game }) {
       ctx.moveTo(player.x + 15, player.y)
       ctx.lineTo(player.x, player.y + 30)
       ctx.lineTo(player.x + 30, player.y + 30)
+      ctx.closePath()
       ctx.fill()
 
       if (frame % 40 === 0) {
         enemies.push({
           x: Math.random() * (W - 24),
           y: -25,
-          size: 23
+          size: 23,
         })
       }
 
       ctx.fillStyle = '#ffe66d'
+
       bullets.forEach(b => {
         b.y -= 7
         ctx.fillRect(b.x, b.y, 4, 12)
       })
+
       bullets = bullets.filter(b => b.y > -15)
 
       for (const enemy of enemies) {
         enemy.y += 1.8
+
         ctx.fillStyle = '#a855f7'
         ctx.fillRect(enemy.x, enemy.y, enemy.size, enemy.size)
 
@@ -185,8 +233,10 @@ function ArcadeGame({ game }) {
 
         for (const b of bullets) {
           if (
-            b.x >= enemy.x && b.x <= enemy.x + enemy.size &&
-            b.y >= enemy.y && b.y <= enemy.y + enemy.size
+            b.x >= enemy.x &&
+            b.x <= enemy.x + enemy.size &&
+            b.y >= enemy.y &&
+            b.y <= enemy.y + enemy.size
           ) {
             points += 10
             setScore(points)
@@ -208,12 +258,18 @@ function ArcadeGame({ game }) {
     function drawRunner() {
       const ground = H - 48
 
-      if (keys.current.arrowup || keys.current.w || keys.current[' ']) {
-        if (player.y >= ground - player.h) player.vy = -11
+      if (
+        keys.current.arrowup ||
+        keys.current.w ||
+        keys.current[' ']
+      ) {
+        if (player.y >= ground - player.h) {
+          player.vy = -11
+        }
       }
 
-      player.vy = (player.vy || 0) + 0.55
-      player.y += player.vy || 0
+      player.vy += 0.55
+      player.y += player.vy
 
       if (player.y > ground - player.h) {
         player.y = ground - player.h
@@ -227,11 +283,16 @@ function ArcadeGame({ game }) {
       ctx.fillRect(0, ground, W, 2)
 
       if (frame % 65 === 0) {
-        enemies.push({ x: W + 20, y: ground - 25, size: 25 })
+        enemies.push({
+          x: W + 20,
+          y: ground - 25,
+          size: 25,
+        })
       }
 
       enemies.forEach(e => {
         e.x -= 4
+
         ctx.fillStyle = '#ff4d6d'
         ctx.fillRect(e.x, e.y, e.size, e.size)
 
@@ -242,7 +303,6 @@ function ArcadeGame({ game }) {
           e.y + e.size > player.y
         ) {
           endGame()
-          return
         }
       })
 
@@ -257,6 +317,7 @@ function ArcadeGame({ game }) {
     function drawBrickBreaker() {
       if (keys.current.arrowleft || keys.current.a) paddle.x -= 6
       if (keys.current.arrowright || keys.current.d) paddle.x += 6
+
       paddle.x = Math.max(0, Math.min(W - paddle.w, paddle.x))
 
       ctx.fillStyle = '#45eaff'
@@ -291,8 +352,10 @@ function ArcadeGame({ game }) {
       for (const brick of bricks) {
         if (
           brick.alive &&
-          ball.x >= brick.x && ball.x <= brick.x + brick.w &&
-          ball.y >= brick.y && ball.y <= brick.y + brick.h
+          ball.x >= brick.x &&
+          ball.x <= brick.x + brick.w &&
+          ball.y >= brick.y &&
+          ball.y <= brick.y + brick.h
         ) {
           brick.alive = false
           ball.vy *= -1
@@ -349,22 +412,34 @@ function ArcadeGame({ game }) {
   }
 
   return (
-    <section className="arcade-panel" style={{ '--game-color': game.color }}>
+    <section
+      className="arcade-panel"
+      style={{ '--game-color': game.color }}
+    >
       <div className="arcade-game-title">
         <span>{game.icon}</span>
         <h2>{game.name}</h2>
       </div>
 
-      <div className="arcade-score">SCORE <strong>{score}</strong></div>
+      <div className="arcade-score">
+        SCORE <strong>{score}</strong>
+      </div>
 
       <div className="arcade-canvas-wrap">
         <canvas ref={canvasRef} width="360" height="400" />
 
         {(!running || over) && (
           <div className="arcade-overlay">
-            <span className="arcade-big-icon">{over ? '💥' : game.icon}</span>
+            <span className="arcade-big-icon">
+              {over ? '💥' : game.icon}
+            </span>
+
             <h3>{over ? 'GAME OVER' : 'READY TO PLAY?'}</h3>
-            <p>{over ? `Final score: ${score}` : 'Start your mission.'}</p>
+
+            <p>
+              {over ? `Final score: ${score}` : 'Start your mission.'}
+            </p>
+
             <button className="arcade-play" onClick={start}>
               {over ? '↻ RESTART' : '▶ PLAY NOW'}
             </button>
@@ -383,11 +458,20 @@ function ArcadeGame({ game }) {
 }
 
 export default function ArcadeGames() {
+  const navigate = useNavigate()
   const [selected, setSelected] = useState('snake')
   const game = GAMES.find(g => g.id === selected)
 
   return (
     <main className="cosmic-arcade">
+      <button
+        className="arcade-play"
+        onClick={() => navigate('/library')}
+        style={{ marginBottom: '20px' }}
+      >
+        🚀 SPACE SHOOTER
+      </button>
+
       <header className="arcade-header">
         <p>THE COSMICXP ARCADE</p>
         <h1>CHOOSE YOUR GAME</h1>
