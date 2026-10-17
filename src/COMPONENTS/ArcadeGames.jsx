@@ -2,6 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import './ArcadeGames.css'
+import { useNavigate, useLocation } from 'react-router-dom'
 
 const GAMES = [
   { id: 'snake', name: 'Snake Game', icon: '🐍', color: '#48ff9b' },
@@ -627,8 +628,11 @@ function ArcadeGame({ game }) {
 }
 
 export default function ArcadeGames() {
-  const navigate = useNavigate()
-  const [selected, setSelected] = useState('snake')
+ const navigate = useNavigate()
+const location = useLocation()
+const [selected, setSelected] = useState(
+  location.state?.selectedGame || 'snake'
+)
   const game = GAMES.find(g => g.id === selected)
 
   return (

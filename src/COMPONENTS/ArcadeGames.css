@@ -161,3 +161,44 @@
     flex: 1 1 42%;
   }
 }
+.library-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 22px;
+  width: min(1100px, 92%);
+  margin: 35px auto;
+}
+
+.library-card {
+  background: linear-gradient(145deg, #111a35, #080d20);
+  border: 1px solid #26365c;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.25s, border-color 0.25s;
+}
+
+.library-card:hover {
+  transform: translateY(-6px);
+  border-color: #45eaff;
+}
+
+.library-card-icon {
+  font-size: 48px;
+  margin-bottom: 14px;
+}
+
+.library-card h2 {
+  color: white;
+  font-size: 21px;
+}
+
+.library-card p {
+  color: #aab6d3;
+  min-height: 24px;
+}
+
+.library-card .arcade-play {
+  margin-top: 12px;
+}
