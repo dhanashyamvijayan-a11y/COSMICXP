@@ -6,7 +6,6 @@ import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import { useNavigate } from 'react-router-dom'
 
-
 import rdr from '../assets/Games/rdr.jpeg'
 import forza from '../assets/Games/forza.jpeg'
 import cyber from '../assets/Games/cyber.jpeg'
@@ -92,22 +91,27 @@ const games = [
   },
 ]
 
+const gameMap = {
+  'Forza Horizon 5': 'racing',
+  'Red Dead Redemption': 'runner',
+  'Cyberpunk 2077': 'alien',
+  PUBG: 'alien',
+  'GTA V': 'runner',
+  Minecraft: 'maze',
+  Fortnite: 'brick',
+  Valorant: 'alien',
+  'Euro Truck Simulator 2': 'racing',
+}
+
 function GameCards() {
   const navigate = useNavigate()
 
   const handleActionClick = (game) => {
-    const libraryGame = {
-      id: `${game.title}-${Date.now()}`,
-      title: game.title,
-      description: game.description,
-      rating: game.rating,
-      image: game.image,
-      playtime: '0 hours',
-      lastPlayed: 'Never',
-      status: 'Installed',
-    }
-
-    navigate('/library', { state: { newGame: libraryGame } })
+    navigate('/arcade', {
+      state: {
+        selectedGame: gameMap[game.title] || 'snake',
+      },
+    })
   }
 
   return (
@@ -117,9 +121,11 @@ function GameCards() {
           <span className="cosmic-eyebrow">
             YOUR NEXT ADVENTURE STARTS HERE
           </span>
+
           <h2 className="game-title mt-2 mb-3">
             Featured <span>Games</span>
           </h2>
+
           <p className="cosmic-section-subtitle">
             Discover your next world. Choose your game. Make it legendary.
           </p>
@@ -137,9 +143,11 @@ function GameCards() {
                     className="cosmic-game-image"
                     loading="lazy"
                   />
+
                   <span className="cosmic-game-genre">
                     {game.genre}
                   </span>
+
                   <span className="cosmic-game-rating">
                     <span aria-hidden="true">★</span>{' '}
                     {game.rating.toFixed(1)}
